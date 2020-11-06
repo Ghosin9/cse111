@@ -1,0 +1,37 @@
+ASSIGNMENT 1 NOTES
+
+in order to print out a char frm 0-9 u have to static cast the char to an unsigned int, using:
+
+	cout << static_cast<unsigned_int>(nine) << endl;
+
+	or you can change it to an unsigned char by adding '0'
+
+	cout << static_cast<unsigned_char>(nine + '0') << endl;
+
+uint8_t is the exact same thing as using an unsigned char;
+
+once you change ubigvalue_t to ubig_value, uvalue is undeclared, so you can delete : uvalue (that) frmo your methods
+
+leave operator/ and operator% as is
+
+to surpress unused parameter warnings use (void) variable
+
+for multiply x2 you add the carry after u multiply, go left to right (least sig to most sig)
+
+for divide /2 you divide by 2, and if the next digit is odd you add 5, go left to right (least sig to most sig)
+
+write a loop that iterates through each digit using /10 and %/10
+
+iterators of containers
+	begin()
+	end()
+	cbegin(), cend()
+	crbegin(), crend()
+	rbegin(), rend()
+
+	EX: auto iter = that.begin();
+		cout << *iter << endl;
+
+	the end iterator is an invalid value
+
+	

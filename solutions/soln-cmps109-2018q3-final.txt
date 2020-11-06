@@ -1,0 +1,210 @@
+$Id: soln-cmps109-2018q3-final.txt,v 1.5 2018-08-07 17:18:01-07 - - $
+Answers to CMPS-109 2018q1-midterm, page 1
+
+_________________________________________________________________
+Question 1. [2]
+
+| WHITE[] { 255, 255, 255}; | BLACK[]   {  0,   0,   0};
+| RED[]   { 255,   0,   0}; | CYAN[]    {  0, 255, 255};
+| GREEN[] {   0, 255,   0}; | MAGENTA[] {255,   0, 255};
+| BLUE[]  {   0,   0, 255}; | YELLOW[]  {255, 255,   0};
+
+_________________________________________________________________
+Question 2. [2]
+
+template <typename value_type> //// 1 point for class thing
+class thing {
+   iterator begin();
+   iterator end();
+};
+template <typename value_type> //// 1 point for class iterator
+class thing<value_type>::iterator {
+   iterator& operator++();
+   bool operator!= (const iterator&);
+   int& operator*();
+};
+
+_________________________________________________________________
+Question 3. [2]
+
++-------------------------------+-------------------------------+
+|void f(int);              A O  |class baz: private qux {  U I  |
+|void f(string);                |};                             |
++-------------------------------+-------------------------------+
+|template <typename T>     U P  |void f(double);           A C  |
+|T sum (T*);                    |int x; f(x);                   |
++-------------------------------+-------------------------------+
+
+_________________________________________________________________
+Question 4. [2]
+
+class foo {
+   foo& operator++();
+   foo operator++ (int);
+}
+
+_________________________________________________________________
+Question 5. [2]
+
+foo& operator++ (foo&);
+foo operator++ (foo&, int);
+
+
+Answers to CMPS-109 2018q1-midterm, page 2
+
+_________________________________________________________________
+Question 6. [2]
+
+void divide_by_2 (vector<unsigned char>& value) {
+   for (size_t i = 0; i < value.size() - 2; ++i) {
+      unsigned borrow = (value[i + 1] & 1) ? 5 : 0;
+      value[i] = value[i] / 2 + borrow;
+   }
+   value[value.size() - 1] /= 2;
+};
+
+_________________________________________________________________
+Question 7(a). [2]
+
+counter& counter::operator++() { //// deduct 1 point if no unique_lock
+   unique_lock<mutex> unique (lock);
+   ++count;
+   return *this;
+}
+
+_________________________________________________________________
+Question 7(b). [2]
+
+size_t counter::reset() { //// deduct 1 point if no unique_lock
+   unique_lock<mutex> unique (lock);
+   size_t value = count;
+   count = 0;
+   return value;
+}
+
+_________________________________________________________________
+Question 8. [4]
+
+template <typename item_t>
+class queue {
+   private:
+      deque<item_t> data;
+   public:
+      void push_back (const item_t& it) { data.push_back (it); }
+      void pop_front() { data.pop_front(); }
+      const item_t& front() const { return data.front(); }
+      item_t& front() { return data.front(); }
+      size_t size() const { return data.size(); }
+      bool empty() const { return data.empty(); }
+};
+
+
+Answers to CMPS-109 2018q1-midterm, page 3
+
+_________________________________________________________________
+Question 9. [2]
+
+class foo {
+   foo();
+   foo (const foo&);
+   foo (foo&&);
+   foo& operator= (const foo&);
+   foo& operator= (foo&&);
+   ~foo();
+};
+
+_________________________________________________________________
+Question 10. [2]
+
+double inner_product (const vector<double>& v1,
+                      const vector<double>& v2) {
+   double ip = 0;
+   if (v1.size() != v2.size()) throw domain_error ("inner_product");
+   for (size_t i = 0; i != v1.size(); ++i) {
+      ip += v1[i] * v2[i];
+   }
+   return ip;
+};
+
+_________________________________________________________________
+Question 11. [2]
+
+template <typename number, typename iterator>
+number sum (number zero, iterator begin, iterator end) {
+   number result = zero;
+   while (begin != end) result += *begin++;
+   return result;
+}
+
+_________________________________________________________________
+Question 12. [4]
+
+string readpipe (const string& command) {
+   FILE* pipe = popen (command.c_str(), "r");
+   if (pipe == nullptr) throw runtime_error ("readpipe");
+   string result;
+   char buffer[1000];
+   for (;;) {
+      char* rc = fgets (buffer, sizeof buffer, pipe);
+      if (rc == nullptr) break;
+      result.append (buffer); //// OK to use += to append
+   }
+   pclose (pipe);
+   return result;
+}
+
+
+Answers to CMPS-109 2018q1-midterm, page 4
+
+ 1.       (B) template <typename T>
+              class stack: private vector<T>
+
+ 2.       (A) begin but not end
+
+ 3.       (A) $ O ( 1 ) $
+
+ 4.       (B) $ O ( log sub 2 n ) $
+
+ 5.       (C) foo.o: foo.cpp foo.h
+
+ 6.       (C) ostream&
+
+ 7.       (D) i->second
+
+ 8.       (C) 32
+
+ 9.       (D) value* operator->();
+
+10.       (B) mapped_type
+
+11.       (C) not (a < b) and not (b < a)
+
+12.       (B) 0x1db3010
+
+
+Answers to CMPS-109 2018q1-midterm, page 5
+
+ 1.       (B) const foo&
+
+ 2.       (A) operator()
+
+ 3.       (C) $ roman "{" ~ x suchthat a <= x < b ~ roman "}" $
+
+ 4.       (A) v[-1]
+
+ 5.       (B) list
+
+ 6.       (D) foo*
+
+ 7.       (D) vector<int>
+
+ 8.       (A) $ O ( 1 ) $
+
+ 9.       (B) R"(x*?)"
+
+10.       (C) $<
+
+11.       (C) foo (foo&&);
+
+12.       (B) list
+

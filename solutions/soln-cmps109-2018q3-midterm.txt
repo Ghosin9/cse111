@@ -1,0 +1,187 @@
+$Id: soln-cmps109-2018q3-midterm.txt,v 1.1 2018-08-14 12:49:55-07 - - $
+Answers to CMPS-109 2018q1-midterm, page 1
+
+_________________________________________________________________
+Question 1. [3]
+#include <iostream>
+using namespace std;
+int main (int argc, char**) {
+   if (argc == 1) { cout << "Hello, World!" << endl;
+                    return 0;
+   }else {          cerr << "Usage: hello" << endl;
+                    return 1;
+   }
+}
+_________________________________________________________________
+Question 2(a). [1]
+class expr {
+   public:
+      virtual double value() const = 0;
+};
+_________________________________________________________________
+Question 2(b). [2]
+class number: public expr {
+   private:
+      double val {};
+   public:
+      number (double v = 0): val(v) {}
+      virtual double value() const override { return val; }
+};
+_________________________________________________________________
+Question 2(c). [2]
+class add: public expr {
+   private:
+      expr_ptr left;
+      expr_ptr right;
+   public:
+      add (expr_ptr left, expr_ptr right): left(left), right(right) {}
+      virtual double value() const override {
+         return left->value() + right->value();
+      }
+};
+_________________________________________________________________
+Question 2(d). [2]
+class mul: public expr {
+   private:
+      expr_ptr left;
+      expr_ptr right;
+   public:
+      mul (expr_ptr left, expr_ptr right): left(left), right(right) {}
+      virtual double value() const override {
+         return left->value() * right->value();
+      }
+};
+
+Answers to CMPS-109 2018q1-midterm, page 2
+
+_________________________________________________________________
+Question 3. [2]
+template <class T>
+inline bool operator!= (const T& x, const T& y) { return not (x == y); }
+template <class T>
+inline bool operator> (const T& x, const T& y) { return y < x; }
+template <class T>
+inline bool operator<= (const T& x, const T& y) { return not (y < x); }
+template <class T>
+inline bool operator>= (const T& x, const T& y) { return not (x < y); }
+
+_________________________________________________________________
+Question 4(a). [1]
+complex (double re = 0, double im = 0): real(re), imag(im) {};
+_________________________________________________________________
+Question 4(b). [1]
+complex operator+ (complex that) {
+   return {real + that.real, imag + that.imag};
+}
+_________________________________________________________________
+Question 5. [2]
+#include <iostream>
+using namespace std;
+int main (int argc, char** argv) {
+   for (int i = 1; i < argc; ++i) {
+      if (i > 1) cout << " ";
+      cout << argv[i];
+   }
+   cout << endl;
+   return 0;
+}
+_________________________________________________________________
+Question 6. [2]
+void ubigint::multiply_by_2() {
+   unsigned char carry = 0;
+   for (size_t i = 0; i < value.size(); ++i) {
+      unsigned char digit = value[i] * 2 + carry;
+      value[i] = digit % 10;
+      carry = digit / 10;
+   }
+   if (carry) value.push_back (carry);
+}
+_________________________________________________________________
+Question 7. [2]
+template <typename itor, typename item>
+itor linear_search (itor begin, itor end, const item& key) {
+   for (; begin != end; ++begin) {
+      if (*begin == key) return begin;
+   }
+   return begin;
+}
+
+Answers to CMPS-109 2018q1-midterm, page 3
+
+_________________________________________________________________
+Question 8. [2]
+bool name::operator< (const name& that) {
+   return last < that.last
+       or last == that.last and first < that.first;
+}
+
+_________________________________________________________________
+Question 9. [1]
+void ubigint::trim() {
+   while (value.size() > 0 and value.back() == 0) value.pop_back();
+}
+
+_________________________________________________________________
+Question 10. [3]
+template <typename itor, typename container>
+void merge (itor begin1, itor end1, itor begin2, itor end2,
+            container& out) {
+   while (begin1 != end1 and begin2 != end2) {
+      if (*begin1 < *begin2) out.push_back (*begin1++);
+                        else out.push_back (*begin2++);
+   }
+   while (begin1 != end1) out.push_back (*begin1++);
+   while (begin2 != end2) out.push_back (*begin2++);
+}
+
+_________________________________________________________________
+Question 11. [2]
+template <typename item_t>
+ostream& operator<< (ostream& out, const vector<item_t>& vec) {
+   string space = "";
+   for (const auto& item: vec) {
+      out << space << item;
+      space = " ";
+   }
+   return out;
+}
+
+_________________________________________________________________
+Question 12. [2]
+
+template <typename Iter>
+void reverse (Iter begin, Iter end) {
+   while (begin != end && begin != --end) {
+      swap (*begin, *end);
+      ++begin;
+   }
+}
+
+
+Answers to CMPS-109 2018q1-midterm, page 4
+
+ 1.   (D) virtual
+
+ 2.   (B) $ O ( log n ) $
+
+ 3.   (C) protected
+
+ 4.   (D) valgrind
+
+ 5.   (C) override
+
+ 6.   (D) foo& operator++();
+
+ 7.   (B) int main (int, char**);
+
+ 8.   (B) i->second
+
+ 9.   (C) cyclic graph
+
+10.   (C) #ifndef __FOO_H__
+
+11.   (C) catch (exn& e)
+
+12.   (D) Prevents one-argument constructors from
+          behaving as automatic type conversions.
+
